@@ -23,7 +23,6 @@ import android.os.IBinder;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.teloquitous.lab.ankabut.AnkabutKeyStrings;
 import com.teloquitous.lab.ankabut.MainTabActivity;
@@ -55,50 +54,8 @@ public class TeloPlayerService extends Service implements
 		return mMediaPlayer;
 	}
 
-	public void initMediaPlayer(String url) { // not used!!
-		client.onInitializePlayerStart("Connecting...");
-		mMediaPlayer = new MediaPlayer();
-		mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-		try {
-			mMediaPlayer.setDataSource(url);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		mMediaPlayer.setOnBufferingUpdateListener(this);
-		mMediaPlayer.setOnInfoListener(this);
-		mMediaPlayer.setOnPreparedListener(this);
-		mMediaPlayer.setOnErrorListener(this);
-		mMediaPlayer.setOnCompletionListener(this);
-		mMediaPlayer.prepareAsync();
-
-	}
-
-	public void initMediaPlayer(Radio r) {
-		Log.d("TELO", "Start Radio...");
-		client.onInitializePlayerStart("Connecting...");
-		radio = r;
-		onRadio = true;
-		mMediaPlayer = new MediaPlayer();
-		mMediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-		try {
-			mMediaPlayer.setDataSource(radio.getUrl());
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		mMediaPlayer.setOnBufferingUpdateListener(this);
-		mMediaPlayer.setOnInfoListener(this);
-		mMediaPlayer.setOnPreparedListener(this);
-		mMediaPlayer.setOnErrorListener(this);
-		mMediaPlayer.setOnCompletionListener(this);
-		mMediaPlayer.prepareAsync();
-
-	}
-
 	public void initMediaPlayer(Kajian k) {
-		client.onInitializePlayerStart("Connecting...");
+		client.onInitializePlayerStart("Menyambung...");
 		this.kajian = k;
 		onRadio = false;
 		ss = Executors.newScheduledThreadPool(1);
@@ -150,7 +107,7 @@ public class TeloPlayerService extends Service implements
 
 	public void pauseMediaPlayer() {
 		mMediaPlayer.pause();
-//		stopForeground(true);
+		// stopForeground(true);
 		client.onStopped(true);
 	}
 
@@ -238,7 +195,7 @@ public class TeloPlayerService extends Service implements
 		if (ss != null)
 			ss.shutdown();
 	}
-	
+
 	public void resumeMediaPlayer() {
 		try {
 			mMediaPlayer.start();
@@ -246,8 +203,7 @@ public class TeloPlayerService extends Service implements
 		} catch (Exception e) {
 			client.onError();
 		}
-		
-		
+
 	}
 
 	@Override
@@ -262,26 +218,30 @@ public class TeloPlayerService extends Service implements
 
 	@Override
 	public void onCompletion(MediaPlayer mp) {
-		Log.d("TeloPlayer", "Finished palying media");
 		stopForeground(true);
 		client.onCompleted();
 		mMediaPlayer.release();
-		ss.shutdown();
+		if (ss != null)
+			ss.shutdown();
 	}
 
 	@Override
 	public void onDestroy() {
-		SharedPreferences p = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		Editor e = p.edit();
-		e.putBoolean(_KEY_PREF_ON_PLAY, false);
-		e.putString(_KEY_PREF_PLAY_URL, "");
-		e.putInt(_KEY_PREF_PLAY_LIST_POS, -1);
-		e.commit();
+		try {
+			SharedPreferences p = PreferenceManager
+					.getDefaultSharedPreferences(this);
+			Editor e = p.edit();
+			e.putBoolean(_KEY_PREF_ON_PLAY, false);
+			e.putString(_KEY_PREF_PLAY_URL, "");
+			e.putInt(_KEY_PREF_PLAY_LIST_POS, -1);
+			e.commit();
+		} catch (Exception e) {
+		}
+
 		mMediaPlayer.reset();
 		mMediaPlayer.release();
-		ss.shutdown();
+		if (ss != null)
+			ss.shutdown();
 		super.onDestroy();
 	}
-
 }

@@ -23,7 +23,6 @@ import android.os.IBinder;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.teloquitous.lab.ankabut.AnkabutKeyStrings;
 import com.teloquitous.lab.ankabut.MainTabActivity;
@@ -56,7 +55,6 @@ public class TeloRadioService extends Service implements
 	}
 
 	public void initMediaPlayer(Radio r) {
-		Log.d("TELO", "Start Radio...");
 		client.onInitializePlayerStart("Menyambung...");
 		radio = r;
 		onRadio = true;
@@ -208,25 +206,29 @@ public class TeloRadioService extends Service implements
 
 	@Override
 	public void onCompletion(MediaPlayer mp) {
-		Log.d("TeloPlayer", "Finished palying media");
 		stopForeground(true);
 		client.onCompleted();
 		mMediaPlayer.release();
-		ss.shutdown();
+		if (ss != null)
+			ss.shutdown();
 	}
 
 	@Override
 	public void onDestroy() {
-		SharedPreferences p = PreferenceManager
-				.getDefaultSharedPreferences(this);
-		Editor e = p.edit();
-		e.putBoolean(_KEY_PREF_ON_PLAY, false);
-		e.putString(_KEY_PREF_PLAY_URL, "");
-		e.putInt(_KEY_PREF_PLAY_LIST_POS, -1);
-		e.commit();
+		try {
+			SharedPreferences p = PreferenceManager
+					.getDefaultSharedPreferences(this);
+			Editor e = p.edit();
+			e.putBoolean(_KEY_PREF_ON_PLAY, false);
+			e.putString(_KEY_PREF_PLAY_URL, "");
+			e.putInt(_KEY_PREF_PLAY_LIST_POS, -1);
+			e.commit();
+		} catch (Exception e) {
+		}
 		mMediaPlayer.reset();
 		mMediaPlayer.release();
-		ss.shutdown();
+		if (ss != null)
+			ss.shutdown();
 		super.onDestroy();
 	}
 

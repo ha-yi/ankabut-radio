@@ -238,12 +238,16 @@ public class AudioRssFragment extends Fragment implements
 	}
 
 	private boolean isInternetConnected() {
-		ConnectivityManager conMgr = (ConnectivityManager) getActivity()
-				.getSystemService(Context.CONNECTIVITY_SERVICE);
+		try {
+			ConnectivityManager conMgr = (ConnectivityManager) getActivity()
+					.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-		if (conMgr.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTED
-				|| conMgr.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTING) {
-			return true;
+			if (conMgr.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTED
+					|| conMgr.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTING) {
+				return true;
+			}
+		} catch (Exception e) {
+			return false;
 		}
 		return false;
 	}
@@ -295,7 +299,7 @@ public class AudioRssFragment extends Fragment implements
 				l.setVisibility(View.VISIBLE);
 			}
 		} catch (Exception e) {
-
+			l.setVisibility(View.VISIBLE);
 		}
 
 	}
@@ -477,14 +481,14 @@ public class AudioRssFragment extends Fragment implements
 
 	@Override
 	public void onInitializeComplete() {
-		data.get(selectedPos).setStatusMessage("Playing");
+		data.get(selectedPos).setStatusMessage("Menjalankan");
 		data.get(selectedPos).setPlayedAtm(true);
 		listView.invalidateViews();
 	}
 
 	@Override
 	public void onError() {
-		data.get(selectedPos).setStatusMessage("Error");
+		data.get(selectedPos).setStatusMessage("Gagal");
 		data.get(selectedPos).setPlayedAtm(false);
 		listView.invalidateViews();
 		selectedPos = -1;
@@ -493,7 +497,7 @@ public class AudioRssFragment extends Fragment implements
 
 	@Override
 	public void onCompleted() {
-		data.get(selectedPos).setStatusMessage("Done.");
+		data.get(selectedPos).setStatusMessage("Selesai.");
 		data.get(selectedPos).setPlayedAtm(false);
 		listView.invalidateViews();
 		selectedPos = -1;
@@ -504,10 +508,10 @@ public class AudioRssFragment extends Fragment implements
 	public void onStopped(boolean stat) {
 		// Log.d("POSISI", "" + selectedPos + " : " + firstVisibleItem);
 		if (lastSelectPos != selectedPos && lastSelectPos != -1) {
-			data.get(lastSelectPos).setStatusMessage("Done.");
+			data.get(lastSelectPos).setStatusMessage("Selesai.");
 			data.get(lastSelectPos).setPlayedAtm(false);
 		} else {
-			data.get(selectedPos).setStatusMessage("Stopped.");
+			data.get(selectedPos).setStatusMessage("Berhenti");
 			data.get(selectedPos).setPlayedAtm(false);
 		}
 
