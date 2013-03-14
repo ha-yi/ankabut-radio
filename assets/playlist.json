@@ -1,0 +1,147 @@
+[
+  {
+    "nama": "Radio Rodja [AM 756 KHz]",
+    "lokasi": "Kab. Bogor, Prov. Jawa Barat\nhttp://www.radiorodja.com",
+    "url": "http://live.radiorodja.com/;stream.nsv"
+  },
+  {
+    "nama": "Radio Muslim Yogyakarta",
+    "lokasi": "DI Yogyakarta \nhttp://www.radiomuslim.com",
+    "url": "http://113.20.29.220:80/;stream.nsv"
+  },
+  {
+    "nama": "Radio Muslim Jakarta",
+    "lokasi": "Jakarta \nhttp://radiomuslimjakarta.com",
+    "url": "http://www.radiomuslimjakarta.com:8111/;stream.nsv"
+  },
+  {
+    "nama": "Radio Hang [FM 106]",
+    "lokasi": "Kota Batam, Riau \nhttp://www.hang106.or.id",
+    "url": "http://207.210.101.240/;stream.nsv"
+  },
+  {
+    "nama": "Annash Radio",
+    "lokasi": "Kalibata, Jakarta Selatan \nhttp://www.annashradio.com/",
+    "url": "http://119.110.87.62:7052/;stream.nsv"
+  },
+  {
+    "nama": "Al-Iman Surabaya",
+    "lokasi": "Surabaya \nhttp://www.alimanradio.or.id",
+    "url": "http://live.alimanradio.or.id/;stream.nsv"
+  },
+  {
+    "nama": "Nurussunnah Semarang",
+    "lokasi": "Semarang \nhttp://nurussunnah.com",
+    "url": "http://live.nurussunnah.com/;stream.nsv"
+  },
+  {
+    "nama": "Radio Annajiyah Bandung",
+    "lokasi": "Bandung \nhttp://radioannajiyah.com",
+    "url": "http://113.20.29.219:8880/;stream.nsv"
+  },
+  {
+    "nama": "Radio Bass FM Salatiga",
+    "lokasi": "Salatiga \nhttp://bassfmsalatiga.com",
+    "url": "http://live.bassfmsalatiga.com:80/;stream.nsv"
+  },
+  {
+    "nama": "Kajian Barando Medan",
+    "lokasi": "Medan, http://kajianbarando.blogspot.com",
+    "url": "http://kbarando.indostreamserver.com:8172/;stream.nsv"
+  },
+  {
+    "nama": "Radio Al-Hikmah",
+    "lokasi": "Kota Banyuwangi, Prov. Jawa Timur",
+    "url": "http://alhikmah.indostreamserver.com:8164/;stream.nsv"
+  },
+  {
+    "nama": "Kajian Online Medan",
+    "lokasi": "Sumatera Utara",
+    "url": "http://live.kajianonlinemedan.com/;stream.nsv"
+  },
+  {
+    "nama": "Radio Hidayah [FM 103.4]",
+    "lokasi": "Pekanbaru, Riau",
+    "url": "http://radio.hidayahfm.com:9988/;stream.nsv"
+  },
+  {
+    "nama": "Radio Shohabat [AM 9009 KHz]",
+    "lokasi": "Kota Bandung, Prov. Jawa Barat",
+    "url": "http://203.29.26.164:8188/listen.pls"
+  },
+  {
+    "nama": "Radio Dar El-Salam",
+    "lokasi": " Kota Bekasi, Prov. Jawa Barat",
+    "url": "http://173.212.238.62:8017/;stream.nsv"
+  },
+  {
+    "nama": "Radio As-Sunnah [FM 92.3]",
+    "lokasi": "Kota Cirebon, Prov. Jawa Barat \nhttp://www.radioassunnah.com",
+    "url": "http://live.radiosunnah.net/;stream.nsv"
+  },
+  {
+    "nama": "Radio Adh-Dhiya [FM 107.7 MHz]",
+    "lokasi": "Kota Cirebon, Prov. Jawa Barat",
+    "url": "http://203.29.26.164:8098/"
+  },
+  {
+    "nama": "Radio Medis [FM 107.8 MHz]",
+    "lokasi": "Kab. Karawang, Prov. Jawa Barat",
+    "url": "http://202.78.202.114:8040/;stream.nsv"
+  },
+  {
+    "nama": "Radio Nurussunnah [FM 107.7]",
+    "lokasi": "Kota Semarang, Prov. Jawa Tengah",
+    "url": "http://live.nurussunnah.com/;stream.nsv"
+  },
+  {
+    "nama": "Radio Suara Quran Solo[FM 94.4]",
+    "lokasi": "Kab. Sukoharjo, Prov. Jawa Tengah\nhttp://suaraquran.com",
+    "url": "http://www.radiodakwah.com:8010/;stream.nsv"
+  },
+  {
+    "nama": "Suara Quran Lombok",
+    "lokasi": "Lombok, NTB\nhttp://assunnahfm.com",
+    "url": "http://live.assunnahfm.com:9010/;stream.nsv"
+  },
+  {
+    "nama": "Radio Suara Al-Iman [AM 900 KHz]",
+    "lokasi": "Kota Surabaya, Prov. Jawa Timur \nhttp://www.alimanradio.or.id",
+    "url": "http://live.alimanradio.or.id/;stream.nsv"
+  },
+  {
+    "nama": "Radio Ar-Royan [FM 107.2]",
+    "lokasi": "Kab. Gresik, Prov. Jawa Timur",
+    "url": "http://202.43.173.69/;stream.nsv"
+  },
+  {
+    "nama": "Radio Ar-Royan [FM 107.2] (2)",
+    "lokasi": "Kab. Gresik, Prov. Jawa Timur",
+    "url": "http://202.78.202.114:8085/;stream.nsv"
+  },
+  {
+    "nama": "Radio An-Nur",
+    "lokasi": "Kota Malang, Prov. Jawa Timur",
+    "url": "http://live.radiodakwah.com:80/;stream.nsv"
+  },
+  {
+    "nama": "Radio Idzaatul Khoir [FM 92.6 MHz]",
+    "lokasi": "Kab. Ponorogo, Prov. Jawa Timur",
+    "url": "http://s7.myradiostream.com:52074/;stream.nsv"
+  },
+  {
+    "nama": "Radio Idzaatul Khoir [FM 92.6 MHz] (2)",
+    "lokasi": "Kab. Ponorogo, Prov. Jawa Timur",
+    "url": "http://uk7-free.mixstream.net:52074/;stream.nsv"
+  },
+  {
+    "nama": "Radio An-Nashihah",
+    "lokasi": "Kota Makassar, Prov. Sulawesi Selatan",
+    "url": "http://199.167.134.163:7110/;stream.nsv"
+  },
+  {
+    "nama": "Radio Muadz [FM 94.3]",
+    "lokasi": "Kota Kendari, Prov. Sulawesi Tenggara",
+    "url": "http://live.radiomuadz.com/;stream.nsv"
+  }
+]

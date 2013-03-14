@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Ankabut</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_radio">Radio</string>
+    <string name="menu_news">Artikel</string>
+    <string name="menu_audio">Kajian.net</string>
+    <string name="deskripsi">Kumpulan radio dakwah Ahlussunnah wal jama\'ah Indonesia</string>
+    <string name="ankabut">
+<![CDATA[
+<font color="green">@</font>nkabut
+]]>
+    </string>
+
+    <color name="warna_bg">#F4F4F4</color>
+    <color name="dark_red">#880000</color>
+    <color name="list_divider">#33B5E5</color>
+    <color name="hijau_1">#008000</color>
+
+    <string name="title_artikel_detail">Artikel Detail</string>
+    <string name="title_artikel_list">Items</string>
+    <string name="title_activity_radio_list">RadioList</string>
+    <string name="title_activity_artikel">Artikel</string>
+    <string name="title_activity_audio_rss">AudioRss</string>
+    <string name="ctx_menu_play">Play</string>
+    <string name="ctx_menu_Stop">Stop</string>
+    <string name="ctx_menu_download">Download</string>
+    <string name="ctx_menu_detail">Detail</string>
+    <string name="ctx_menu_share">Share</string>
+    <string name="title_activity_main_tab">Ankabut - Online Radio Tuner</string>
+    <string name="title_activity_rssfeed">Waiting</string>
+
+</resources>

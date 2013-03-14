@@ -1,0 +1,73 @@
+[
+    {
+        "nama": "Manisnyaiman.com",
+        "pengelola": "Ustadz Abdullah Taslim, M.A.",
+        "url": "http://manisnyaiman.com",
+        "feed": "http://manisnyaiman.com/feed/",
+        "type": "artikel"
+    },
+    {
+        "nama": "Yayasan Tunas Ilmu Purbalingga",
+        "pengelola": "Ustadz Abdullah Zaen, MA ",
+        "url": "http://tunasilmu.com",
+        "feed": "http://tunasilmu.com/feed/",
+        "type": "artikel"
+    },
+    {
+        "nama": "Firanda.com",
+        "pengelola": "Ustadz Firanda Andirja Abidin",
+        "url": "http://firanda.com",
+        "feed": "http://firanda.com/index.php?format=feed&type=rss",
+        "type": "artikel"
+    },
+    {
+        "nama": "Remaja Islam",
+        "pengelola": "",
+        "url": "http://remajaislam.com",
+        "feed": "http://remajaislam.com/index.php?format=feed&type=rss",
+        "type": "artikel"
+    },
+    {
+        "nama": "Pengusaha Muslim",
+        "pengelola": "",
+        "url": "http://pengusahamuslim.com",
+        "feed": "http://pengusahamuslim.com/rss",
+        "type": "artikel"
+    },
+    {
+        "nama": "Pengusaha Muslim (LOKER)",
+        "pengelola": "Pengusaha Muslim",
+        "url": "http://job.pengusahamuslim.com",
+        "feed": "http://job.pengusahamuslim.com/feed",
+        "type": "artikel"
+    },
+    {
+        "nama": "Muslimah.or.id",
+        "pengelola": "",
+        "url": "http://muslimah.or.id",
+        "feed": "http://feeds.feedburner.com/muslimah-or-id?format=xml",
+        "type": "artikel-a"
+    },
+
+    {
+        "nama": "UmmiUmmi.com",
+        "pengelola": "",
+        "url": "http://ummiummi.com",
+        "feed": "http://ummiummi.com/feed",
+        "type": "artikel-a"
+    },
+    {
+        "nama": "Radio Rodja",
+        "pengelola": "",
+        "url": "http://radiorodja.com",
+        "feed": "http://feeds.feedburner.com/rodja756am?format=xml",
+        "type": "artikel-r"
+    },
+    {
+        "nama": "Yufid.org",
+        "pengelola": "",
+        "url": "http://yufid.org",
+        "feed": "http://yufid.org/feed/",
+        "type": "artikel-s"
+    }
+]

@@ -1,0 +1,29 @@
+Tambahkan Tab untuk Mp3 Qur'an...
+
+URL: http://www.mp3quran.net/radio_english.html
+Parse: radio name, radio Url, then play... :D
+
+
+FEED
+Annash Radio
+http://feeds.feedburner.com/AnnashRadio?format=xml
+
+http://feeds.feedburner.com/rodja756am?format=xml
+
+http://pengusahamuslim.com/rss
+
+FEED MATI
+    {
+        "nama": "Jilbab Online",
+        "pengelola": "",
+        "url": "http://jilbab.or.id",
+        "feed": "http://jilbab.or.id/feed/",
+        "type": "artikel-a"
+    },
+        {
+        "nama": "Muslim.or.id",
+        "pengelola": "",
+        "url": "http://muslim.or.id",
+        "feed": "http://muslim.or.id/feed",
+        "type": "artikel"
+    },
