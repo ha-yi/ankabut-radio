@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.teloquitous.lab.ankabut.fragment.ArtikelRssFragment;
 import com.teloquitous.lab.ankabut.fragment.AudioRssFragment;
@@ -40,7 +42,7 @@ public class MainTabActivity extends FragmentActivity implements AnkabutKeyStrin
         indicator.setViewPager(pager);
         indicator.setCurrentItem(tab);
         
-        
+        setTitle(R.string.title_activity_main_tab);
 	}
 
 	
@@ -82,6 +84,28 @@ public class MainTabActivity extends FragmentActivity implements AnkabutKeyStrin
 			return CONTENT.length;
 		}
 		
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_main_tab, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onMenuItemSelected(int featureId, MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_about:
+			AboutDialog ab = new AboutDialog(this);
+			ab.setTitle("Tentang Aplikasi ini");
+			ab.setCanceledOnTouchOutside(true);
+			ab.show();
+			break;
+
+		default:
+			break;
+		}
+		return true;
 	}
 
 }
