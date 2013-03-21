@@ -40,6 +40,7 @@ public class TeloPlayerService extends Service implements
 	private Kajian kajian;
 	private Radio radio;
 	private boolean onRadio;
+	private boolean bounded = false;
 	TeloPlayerServiceClient client;
 	ScheduledExecutorService ss;
 
@@ -79,19 +80,41 @@ public class TeloPlayerService extends Service implements
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		// Log.d("SERVICE", "Service started");
 		return START_STICKY;
 	}
 
 	@Override
 	public IBinder onBind(Intent arg0) {
+		bounded = true;
 		return mBinder;
+	}
+
+	@Override
+	public boolean onUnbind(Intent intent) {
+		bounded = false;
+		try {
+			if (mMediaPlayer == null) {
+				stopSelf();
+			} else if (!mMediaPlayer.isPlaying()) {
+				stopSelf();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return super.onUnbind(intent);
 	}
 
 	@Override
 	public boolean onError(MediaPlayer arg0, int arg1, int arg2) {
 		mMediaPlayer.reset();
 		client.onError();
+		if (ss != null)
+			ss.shutdown();
+		clearPref();
+		if (!bounded) {
+			stopSelf();
+		}
 		return true;
 	}
 
@@ -109,13 +132,13 @@ public class TeloPlayerService extends Service implements
 		mMediaPlayer.pause();
 		// stopForeground(true);
 		client.onStopped(true);
+		if (ss != null)
+			ss.shutdown();
 	}
 
 	@SuppressLint("HandlerLeak")
 	private void startMediaPlayer() {
 		Context context = getApplicationContext();
-		// Notification notification = new Notification(R.drawable.ic_launcher,
-		// "Ankabut", System.currentTimeMillis());
 		Intent notifIntent = new Intent(this, MainTabActivity.class);
 		notifIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -139,9 +162,6 @@ public class TeloPlayerService extends Service implements
 			builder.setSmallIcon(R.drawable.ic_stat_play_url);
 		}
 
-		// notification.setLatestEventInfo(context, contentTitle, contentText,
-		// pendingIntent);
-
 		builder.setContentTitle(contentTitle).setContentText(contentText)
 				.setContentIntent(pendingIntent);
 
@@ -151,14 +171,18 @@ public class TeloPlayerService extends Service implements
 			@SuppressLint("SimpleDateFormat")
 			@Override
 			public void handleMessage(Message msg) {
-				if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
-					int pos = mMediaPlayer.getCurrentPosition();
-					TimeZone tz = TimeZone.getTimeZone("UTC");
-					SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
-					df.setTimeZone(tz);
-					String wkt = df.format(new Date(pos));
-					builder.setContentInfo(wkt);
-					nmgr.notify(1, builder.build());
+				try {
+					if (mMediaPlayer != null && mMediaPlayer.isPlaying()) {
+						int pos = mMediaPlayer.getCurrentPosition();
+						TimeZone tz = TimeZone.getTimeZone("UTC");
+						SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
+						df.setTimeZone(tz);
+						String wkt = df.format(new Date(pos));
+						builder.setContentInfo(wkt);
+						nmgr.notify(1, builder.build());
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
 
@@ -178,15 +202,21 @@ public class TeloPlayerService extends Service implements
 	public void stopMediaPlayer() {
 		stopForeground(true);
 		if (mMediaPlayer != null) {
-			// if (mMediaPlayer.isPlaying())
-			mMediaPlayer.stop();
-			mMediaPlayer.reset();
-			mMediaPlayer.release();
-			client.onStopped(false);
-			mMediaPlayer = null;
+			try {
+				if (mMediaPlayer.isPlaying())
+					mMediaPlayer.stop();
+
+				mMediaPlayer.reset();
+				mMediaPlayer.release();
+				client.onStopped(false);
+				mMediaPlayer = null;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		if (ss != null)
 			ss.shutdown();
+		clearPref();
 	}
 
 	public void resetMediaPlayer() {
@@ -223,23 +253,34 @@ public class TeloPlayerService extends Service implements
 		mMediaPlayer.release();
 		if (ss != null)
 			ss.shutdown();
+		clearPref();
+		if (!bounded) {
+			stopSelf();
+		}
 	}
 
-	@Override
-	public void onDestroy() {
+	private void clearPref() {
 		try {
 			SharedPreferences p = PreferenceManager
 					.getDefaultSharedPreferences(this);
 			Editor e = p.edit();
-			e.putBoolean(_KEY_PREF_ON_PLAY, false);
-			e.putString(_KEY_PREF_PLAY_URL, "");
-			e.putInt(_KEY_PREF_PLAY_LIST_POS, -1);
+			e.clear();
 			e.commit();
 		} catch (Exception e) {
 		}
+	}
 
-		mMediaPlayer.reset();
-		mMediaPlayer.release();
+	@Override
+	public void onDestroy() {
+		clearPref();
+		if (mMediaPlayer != null) {
+			try {
+				mMediaPlayer.reset();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			mMediaPlayer.release();
+		}
 		if (ss != null)
 			ss.shutdown();
 		super.onDestroy();

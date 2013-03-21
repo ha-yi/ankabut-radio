@@ -1,5 +1,19 @@
 [
     {
+        "nama": "PemudaMuslim.com",
+        "pengelola": "",
+        "url": "http://pemudamuslim.com",
+        "feed": "http://pemudamuslim.com/feed/",
+        "type": "artikel"
+    },
+    {
+        "nama": "Info Kajian PemudaMuslim.com",
+        "pengelola": "PemudaMuslim.com",
+        "url": "http://pemudamuslim.com/info-kajian/",
+        "feed": "http://pemudamuslim.com/feed/?post_type=wpnuke_kajian",
+        "type": "artikel"
+    },
+    {
         "nama": "Manisnyaiman.com",
         "pengelola": "Ustadz Abdullah Taslim, M.A.",
         "url": "http://manisnyaiman.com",

@@ -43,6 +43,7 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
@@ -58,6 +59,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.teloquitous.lab.ankabut.AnkabutKeyStrings;
 import com.teloquitous.lab.ankabut.R;
@@ -81,14 +83,10 @@ public class AudioRssFragment extends Fragment implements
 	private MediaPlayer mPlayer;
 	private boolean mBound;
 	private static int selectedPos;
-	// private static Context _c;
 	private static boolean dataInitiated = false;
-	// private int firstVisibleItem;
 	private int lastSelectPos;
 	private boolean playedOnLastRun = false;
 	private boolean serviceBerjalan = false;
-	// private int lastRunItem;
-	// private boolean paused;
 	private ViewGroup root;
 
 	private SharedPreferences preferenceManager;
@@ -107,8 +105,6 @@ public class AudioRssFragment extends Fragment implements
 
 	public static Fragment newInstance(Context context) {
 		AudioRssFragment f = new AudioRssFragment();
-		// _c = context;
-		// dataInitiated = false;
 		selectedPos = -1;
 		return f;
 	}
@@ -118,6 +114,7 @@ public class AudioRssFragment extends Fragment implements
 			Bundle savedInstanceState) {
 		root = (ViewGroup) inflater.inflate(R.layout.activity_audio_rss, null);
 		listView = (ListView) root.findViewById(R.id.list);
+		listView.setItemsCanFocus(false);
 		textEmpty = (TextView) root.findViewById(R.id.textViewEmpty);
 
 		anim = new AlphaAnimation(0.0f, 1.0f);
@@ -143,11 +140,6 @@ public class AudioRssFragment extends Fragment implements
 			public void onItemClick(AdapterView<?> arg0, View arg1, int pos,
 					long arg3) {
 				curKajian = data.get(pos);
-				// firstVisibleItem = listView.getFirstVisiblePosition();
-				// Log.d("POSISI on CLICK", "" + selectedPos + " : " + pos);
-				// Log.d("POSISI", "arg3 " + arg3);
-				// Log.d("POSISI",
-				// "Firs Visible " + listView.getFirstVisiblePosition());
 				lastSelectPos = selectedPos;
 				if (mBound) {
 					mPlayer = tPlayer.getMediaPlayer();
@@ -157,13 +149,8 @@ public class AudioRssFragment extends Fragment implements
 					} else {
 						if (selectedPos == pos) {
 							tPlayer.stopMediaPlayer();
-							// tPlayer.pauseMediaPlayer();
-							// paused = true;
 							lastSelectPos = pos;
-						} /*
-						 * else if(paused && selectedPos == pos) {
-						 * tPlayer.pauseMediaPlayer(); lastSelectPos = pos; }
-						 */
+						} 
 						else {
 							if (selectedPos == -1)
 								selectedPos = pos; // prevent on rerun error
@@ -176,7 +163,6 @@ public class AudioRssFragment extends Fragment implements
 					}
 				}
 				listView.invalidateViews();
-				// listView.invalidate();
 			}
 		});
 
@@ -185,6 +171,7 @@ public class AudioRssFragment extends Fragment implements
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View v,
 					int arg2, long arg3) {
+				Log.d("Long pressed", "pressed");
 				return false;
 			}
 		});
@@ -193,7 +180,6 @@ public class AudioRssFragment extends Fragment implements
 	}
 
 	private void fillListView() {
-		// Log.d("DATA SIZE", "" + data.size());
 		if (data != null && data.size() > 0) {
 			try {
 				adapter = new KajianRSSListAdapter(AudioRssFragment.this, data,
@@ -201,7 +187,7 @@ public class AudioRssFragment extends Fragment implements
 
 				listView.setAdapter(adapter);
 				dataInitiated = true;
-				registerForContextMenu(listView);
+//				registerForContextMenu(listView);
 				int i = 0;
 				if (playedOnLastRun) {
 					for (Kajian k : data) {
@@ -265,9 +251,7 @@ public class AudioRssFragment extends Fragment implements
 		LinearGradient lg = new LinearGradient(0, 0, 0, 35, color, position, md);
 		Shader grad = lg;
 		tvTitle.getPaint().setShader(grad);
-		// tvTitle.setShadowLayer(5f, -1, -1, Color.WHITE);
 		tvSubTitle.getPaint().setShader(grad);
-		// tvSubTitle.setShadowLayer(0.2f, 0, 0, Color.WHITE);
 
 		final LinearLayout l = (LinearLayout) root
 				.findViewById(R.id.head_layout);
@@ -313,9 +297,6 @@ public class AudioRssFragment extends Fragment implements
 		} catch (Exception e) {
 		}
 
-		// if(playedOnLastRun) {
-		// lastRunURL = preferenceManager.getInt(_KEY_PREF_PLAY_LIST_POS, -1);
-		// }
 	}
 
 	private ServiceConnection mConnection = new ServiceConnection() {
@@ -323,13 +304,11 @@ public class AudioRssFragment extends Fragment implements
 		@Override
 		public void onServiceDisconnected(ComponentName arg0) {
 			mBound = false;
-			// Log.d("BINDER AudioRSS", "Service Disconnected");
 		}
 
 		@Override
 		public void onServiceConnected(ComponentName className,
 				IBinder serviceBinder) {
-			// Log.e("BINDER AudioRSS", "service connected");
 			MediaPlayerBinder binder = (MediaPlayerBinder) serviceBinder;
 			tPlayer = binder.getService();
 			tPlayer.setClient(AudioRssFragment.this);
@@ -388,28 +367,25 @@ public class AudioRssFragment extends Fragment implements
 			menu.setHeaderTitle(data.get(info.position).getTitle());
 			getActivity().getMenuInflater().inflate(
 					R.menu.contex_menu_audio_rss, menu);
+			Log.d("Context menu", "created");
 			break;
 
 		default:
 			break;
 		}
 	}
+	
 
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
 				.getMenuInfo();
 		Kajian menuSelectedKajian = data.get((int) info.id);
+		Log.d("Context menu", "Selected");
 
 		switch (item.getItemId()) {
-		// case R.id.menu_stop:
-		// try {
-		// tPlayer.pauseMediaPlayer();
-		// } catch (Exception e) {
-		//
-		// }
-		// return true;
 		case R.id.menu_download:
+			Log.d("Context menu", "Selected");
 			startDownloadManager(menuSelectedKajian);
 			return true;
 		default:
@@ -417,16 +393,21 @@ public class AudioRssFragment extends Fragment implements
 		}
 		return super.onContextItemSelected(item);
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		Log.d("Option menu", "Selected");
+		return super.onOptionsItemSelected(item);
+	}
 
 	public void bindToService() {
 		Intent intent = new Intent(getActivity(), TeloPlayerService.class);
 		serviceBerjalan = teloPlayerRunning();
-		// Log.d("AudioRSS", "bind to service");
 		if (serviceBerjalan) {
 			getActivity().bindService(intent, mConnection,
 					Context.BIND_AUTO_CREATE);
 		} else {
-			// Log.d("AudioRSS", "start Service");
 			getActivity().startService(intent);
 			getActivity().bindService(intent, mConnection,
 					Context.BIND_AUTO_CREATE);
@@ -441,11 +422,9 @@ public class AudioRssFragment extends Fragment implements
 				.getRunningServices(Integer.MAX_VALUE)) {
 			if (TeloPlayerService.class.getName().equals(
 					service.service.getClassName())) {
-				// Log.d("CHECK SERVICE", "ADA!!!");
 				return true;
 			}
 		}
-		// Log.e("CHECK SERVICE", "TIDAK ADA!!!");
 		return false;
 	}
 
@@ -463,8 +442,6 @@ public class AudioRssFragment extends Fragment implements
 
 	@Override
 	public void onInitializePlayerStart(String message) {
-		// do something
-		// Log.e("POSISI", "" + selectedPos);
 		data.get(selectedPos).setStatusMessage(message);
 		data.get(selectedPos).setPlayedAtm(true);
 		listView.invalidateViews();
@@ -506,7 +483,6 @@ public class AudioRssFragment extends Fragment implements
 
 	@Override
 	public void onStopped(boolean stat) {
-		// Log.d("POSISI", "" + selectedPos + " : " + firstVisibleItem);
 		if (lastSelectPos != selectedPos && lastSelectPos != -1) {
 			data.get(lastSelectPos).setStatusMessage("Selesai.");
 			data.get(lastSelectPos).setPlayedAtm(false);
@@ -523,8 +499,7 @@ public class AudioRssFragment extends Fragment implements
 	private void savePreferences() {
 		if (preferenceManager != null) {
 			Editor e = preferenceManager.edit();
-			e.putBoolean(_KEY_PREF_ON_PLAY, false);
-			e.putString(_KEY_PREF_PLAY_URL, "");
+			e.clear();
 			e.commit();
 		}
 	}
@@ -536,6 +511,7 @@ public class AudioRssFragment extends Fragment implements
 	 */
 
 	private void startDownloadManager(Kajian menuSelectedKajian) {
+		Log.d("start download", "start download");
 		File f = new File(Environment.getExternalStorageDirectory()
 				+ "/Ankabut");
 		if (!f.exists()) {
@@ -549,23 +525,37 @@ public class AudioRssFragment extends Fragment implements
 		r.setAllowedNetworkTypes(Request.NETWORK_WIFI | Request.NETWORK_MOBILE)
 				.setTitle("Ankabut")
 				.setDescription(menuSelectedKajian.getTitle());
+		Toast.makeText(getActivity(), "Mendownload: " + menuSelectedKajian.getTitle(), Toast.LENGTH_LONG).show();
 
-		// Log.d("SIMPAN DI", Uri.fromFile(f).getPath());
 		downloadManager.enqueue(r);
 	}
 
 	@Override
 	public void onDestroy() {
-		// if(mPlayer.isPlaying()) {
-		// Editor e = preferenceManager.edit();
-		// e.putBoolean(_KEY_PREF_ON_RADIO, false);
-		// e.putBoolean(_KEY_PREF_ON_PLAY, true);
-		// e.putString(_KEY_PREF_PLAY_URL, curKajian.getLink());
-		// e.commit();
-		// }
+		try {
+			if(!mPlayer.isPlaying()) {
+				getActivity().stopService(new Intent(getActivity(), TeloPlayerService.class));
+			} else {
+				if (mBound)
+					getActivity().unbindService(mConnection);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		super.onDestroy();
+	}
+	
+	@Override
+	public void onPause() {
 		if (mBound)
 			getActivity().unbindService(mConnection);
-		super.onDestroy();
+		super.onPause();
+	}
+	
+	 @Override
+	public void onResume() {
+		super.onResume();
 	}
 
 }

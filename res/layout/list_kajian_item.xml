@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="23:13"
+        android:text=""
         android:textColor="#10bcc9"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="5dp"
@@ -21,6 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:contentDescription="@string/ankabut"
         android:src="@drawable/ic_mp3" />
 
     <TextView
@@ -30,7 +31,7 @@
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/textViewDuration"
         android:layout_toRightOf="@+id/imageView1"
-        android:text="Author"
+        android:text=""
         android:textStyle="bold"
         android:textColor="#000000"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -40,9 +41,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textViewAuthor"
-        android:layout_alignParentRight="true"
         android:layout_below="@+id/textViewAuthor"
-        android:text="Author - Title Kajian" />
+        android:layout_toLeftOf="@+id/textViewDuration"
+        android:text="" />
 
     <TextView
         android:id="@+id/textViewDate"
@@ -50,9 +51,21 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/textViewTitle"
         android:layout_below="@+id/textViewTitle"
-        android:text="Tue, 12 March 2013"
+        android:text=""
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="#880000"
-        android:textSize="10dp" />
+        android:textSize="10sp" />
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewDate"
+        android:layout_below="@+id/textViewDuration"
+        android:layout_toRightOf="@+id/textViewAuthor"
+        android:background="@null"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:src="@drawable/ic_download" />
 
 </RelativeLayout>

@@ -2,6 +2,7 @@ package com.teloquitous.lab.ankabut.fragment;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
@@ -45,6 +46,7 @@ import android.widget.TextView;
 
 import com.teloquitous.lab.ankabut.AnkabutKeyStrings;
 import com.teloquitous.lab.ankabut.R;
+import com.teloquitous.lab.ankabut.mediaplayer.TeloPlayerService;
 import com.teloquitous.lab.ankabut.mediaplayer.TeloPlayerServiceClient;
 import com.teloquitous.lab.ankabut.mediaplayer.TeloRadioService;
 import com.teloquitous.lab.ankabut.mediaplayer.TeloRadioService.MediaPlayerBinder;
@@ -53,7 +55,6 @@ import com.teloquitous.lab.ankabut.rss.RadioListAdaptr;
 
 public class RadioListFragment extends Fragment implements AnkabutKeyStrings,
 		TeloPlayerServiceClient {
-	// private static Context _c;
 	private ListView listView;
 	private View root;
 	private boolean dataInitialized = false;
@@ -130,7 +131,6 @@ public class RadioListFragment extends Fragment implements AnkabutKeyStrings,
 			getActivity().bindService(intent, mConnection,
 					Context.BIND_AUTO_CREATE);
 		} else {
-			// Log.d("AudioRSS", "start Service");
 			getActivity().startService(intent);
 			getActivity().bindService(intent, mConnection,
 					Context.BIND_AUTO_CREATE);
@@ -162,13 +162,7 @@ public class RadioListFragment extends Fragment implements AnkabutKeyStrings,
 				playRadio(pos);
 			}
 		});
-		/*
-		 * listView.setOnItemLongClickListener(new OnItemLongClickListener() {
-		 * 
-		 * @Override public boolean onItemLongClick(AdapterView<?> arg0, View
-		 * arg1, int arg2, long arg3) { if(selectedPos == arg2) {
-		 * showPopupMenu(arg1); } return false; } });
-		 */
+
 
 		anim = new AlphaAnimation(0.0f, 1.0f);
 		anim.setDuration(300);
@@ -179,18 +173,6 @@ public class RadioListFragment extends Fragment implements AnkabutKeyStrings,
 		textEmpty.setText("Loading...");
 	}
 
-	/*
-	 * protected void showPopupMenu(View v) { PopupMenu mp = new
-	 * PopupMenu(getActivity(), v); // MenuInflater inf = mp.getMenuInflater();
-	 * String menuText; if(!onRecord) { menuText = "Rekam"; } else { menuText =
-	 * "Stop Rekaman"; } mp.getMenu().add(menuText);
-	 * mp.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-	 * 
-	 * @Override public boolean onMenuItemClick(MenuItem arg0) { // TODO
-	 * Auto-generated method stub return false; } }); mp.show();
-	 * 
-	 * }
-	 */
 
 	protected void playRadio(int pos) {
 		curRadio = data.get(pos);
@@ -242,7 +224,6 @@ public class RadioListFragment extends Fragment implements AnkabutKeyStrings,
 		Shader grad = lg;
 		tvTitle.getPaint().setShader(grad);
 		tvSubTitle.getPaint().setShader(grad);
-		// tvSubTitle.setShadowLayer(0.2f, 0, 0, Color.WHITE);
 
 		final LinearLayout l = (LinearLayout) root
 				.findViewById(R.id.head_layout);
@@ -312,9 +293,7 @@ public class RadioListFragment extends Fragment implements AnkabutKeyStrings,
 	private void terjadiKesalahanFatal() {
 		dataInitialized = false;
 		textEmpty
-				.setText("Sebuah kesalahan telah terjadi saat pasukan pengantar "
-						+ "data membawa data dari markas besar Internet.\n "
-						+ "Silahkan tutup dan jalankan kembali aplikasi.");
+				.setText("Sebuah kesalahan telah terjadi. Silahkan muat ulang aplikasi.");
 		textEmpty.setTextColor(Color.parseColor("#FF9999"));
 		textEmpty.clearAnimation();
 	}
@@ -329,9 +308,10 @@ public class RadioListFragment extends Fragment implements AnkabutKeyStrings,
 
 		@Override
 		protected Void doInBackground(Void... arg0) {
+			InputStream stream = null;
 			try {
-				BufferedReader r = new BufferedReader(new InputStreamReader(
-						getActivity().getAssets().open("playlist.json")));
+				stream = getActivity().getAssets().open("playlist.json");
+				BufferedReader r = new BufferedReader(new InputStreamReader(stream));
 				StringBuilder sb = new StringBuilder();
 				String line = null;
 				while ((line = r.readLine()) != null) {
@@ -353,13 +333,17 @@ public class RadioListFragment extends Fragment implements AnkabutKeyStrings,
 				data = ar;
 
 			} catch (IOException e) {
-				// e.printStackTrace();
-				// Log.e(_c.getApplicationInfo().className, "IOException");
 				terjadiKesalahanFatal();
 			} catch (JSONException e) {
 				e.printStackTrace();
-				// Log.e(_c.getApplicationInfo().className, "JSONException");
 				terjadiKesalahanFatal();
+			} finally {
+				if(stream != null) {
+					try {
+						stream.close();
+					} catch (Exception e2) {
+					}
+				}
 			}
 
 			return null;
@@ -443,20 +427,29 @@ public class RadioListFragment extends Fragment implements AnkabutKeyStrings,
 
 	@Override
 	public void onDestroy() {
-		if (mBound)
-			getActivity().unbindService(mConnection);
+		
+		try {
+			if(!mPlayer.isPlaying()) {
+				getActivity().stopService(new Intent(getActivity(), TeloPlayerService.class));
+			} else {
+				if (mBound)
+					getActivity().unbindService(mConnection);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		super.onDestroy();
 	}
 
 	@Override
 	public void onPause() {
-		Log.d("On Pause", "on pause activity");
+		if (mBound)
+			getActivity().unbindService(mConnection);
 		super.onPause();
 	}
 
 	@Override
 	public void onResume() {
-		Log.d("On RESUME", "on resume activity");
 		if (data != null && data.size() > 0) {
 			dataInitialized = true;
 		}

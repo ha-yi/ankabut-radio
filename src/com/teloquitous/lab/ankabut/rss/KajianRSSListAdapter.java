@@ -1,11 +1,16 @@
 package com.teloquitous.lab.ankabut.rss;
 
+import java.io.File;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.DownloadManager;
+import android.app.DownloadManager.Request;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,7 +19,9 @@ import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.teloquitous.lab.ankabut.AnkabutKeyStrings;
 import com.teloquitous.lab.ankabut.R;
@@ -87,6 +94,9 @@ public class KajianRSSListAdapter extends BaseAdapter implements
 		TextView title = (TextView) v.findViewById(R.id.textViewTitle);
 		TextView dura = (TextView) v.findViewById(R.id.textViewDuration);
 		TextView date = (TextView) v.findViewById(R.id.textViewDate);
+		ImageButton btnDownload = (ImageButton) v.findViewById(R.id.imageButton1);
+		btnDownload.setFocusable(false);
+		btnDownload.setFocusableInTouchMode(false);
 
 		Animation anim = new AlphaAnimation(0.0f, 1.0f);
 		anim.setDuration(500);
@@ -108,14 +118,38 @@ public class KajianRSSListAdapter extends BaseAdapter implements
 		if (k.isPlayedAtm()) {
 			date.setText(k.getStatusMessage());
 			date.startAnimation(anim);
-//			v.setBackgroundResource(R.drawable.list_selector_reverse_dark);
 			author.setTextColor(Color.parseColor("#22AA22"));
 		} else {
 			date.setText(k.getDescription());
 			date.clearAnimation();
-//			v.setBackgroundResource(R.drawable.list_selector_dark);
 			author.setTextColor(Color.WHITE);
 		}
+		final String url = k.getLink();
+		final String judul = k.getTitle();
+		
+		btnDownload.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				File f = new File(Environment.getExternalStorageDirectory()
+						+ "/Ankabut");
+				if (!f.exists()) {
+					f.mkdir();
+				}
+				DownloadManager downloadManager = (DownloadManager) activity.getSystemService(
+						Context.DOWNLOAD_SERVICE);
+				Request r = new Request(Uri.parse(url));
+				r.setDestinationInExternalPublicDir("Ankabut",
+						judul + ".mp3");
+				r.setAllowedNetworkTypes(Request.NETWORK_WIFI | Request.NETWORK_MOBILE)
+						.setTitle("Ankabut")
+						.setDescription(judul);
+				Toast.makeText(activity, "Mendownload: " + judul, Toast.LENGTH_LONG).show();
+
+				downloadManager.enqueue(r);
+				
+			}
+		});
 
 		return v;
 

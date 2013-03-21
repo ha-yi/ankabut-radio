@@ -40,6 +40,7 @@ public class TeloRadioService extends Service implements
 	private Kajian kajian;
 	private Radio radio;
 	private boolean onRadio;
+	private boolean bounded = false;
 	TeloPlayerServiceClient client;
 	ScheduledExecutorService ss;
 
@@ -79,19 +80,40 @@ public class TeloRadioService extends Service implements
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		// Log.d("SERVICE", "Service started");
 		return START_STICKY;
 	}
 
 	@Override
 	public IBinder onBind(Intent arg0) {
+		bounded = true;
 		return mBinder;
+	}
+
+	@Override
+	public boolean onUnbind(Intent intent) {
+		bounded = false;
+		try {
+			if (mMediaPlayer == null) {
+				stopSelf();
+			} else if (!mMediaPlayer.isPlaying()) {
+				stopSelf();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return super.onUnbind(intent);
 	}
 
 	@Override
 	public boolean onError(MediaPlayer arg0, int arg1, int arg2) {
 		mMediaPlayer.reset();
+		clearPref();
 		client.onError();
+		if (ss != null)
+			ss.shutdown();
+		if (!bounded) {
+			stopSelf();
+		}
 		return true;
 	}
 
@@ -137,8 +159,6 @@ public class TeloRadioService extends Service implements
 			builder.setSmallIcon(R.drawable.ic_stat_play_url);
 		}
 
-		// notification.setLatestEventInfo(context, contentTitle, contentText,
-		// pendingIntent);
 
 		builder.setContentTitle(contentTitle).setContentText(contentText)
 				.setContentIntent(pendingIntent);
@@ -176,20 +196,26 @@ public class TeloRadioService extends Service implements
 	public void stopMediaPlayer() throws Exception {
 		stopForeground(true);
 		if (mMediaPlayer != null) {
-			// if (mMediaPlayer.isPlaying())
-			mMediaPlayer.stop();
-			mMediaPlayer.reset();
-			mMediaPlayer.release();
-			client.onStopped(false);
-			mMediaPlayer = null;
+			try {
+				if (mMediaPlayer.isPlaying())
+					mMediaPlayer.stop();
+
+				mMediaPlayer.reset();
+				mMediaPlayer.release();
+				client.onStopped(false);
+				mMediaPlayer = null;
+			} catch (Exception e) {
+			}
 		}
 		if (ss != null)
 			ss.shutdown();
+		clearPref();
 	}
 
 	public void resetMediaPlayer() {
 		stopForeground(true);
 		mMediaPlayer.reset();
+		clearPref();
 		if (ss != null)
 			ss.shutdown();
 	}
@@ -209,24 +235,36 @@ public class TeloRadioService extends Service implements
 		stopForeground(true);
 		client.onCompleted();
 		mMediaPlayer.release();
+		clearPref();
 		if (ss != null)
 			ss.shutdown();
+		if (!bounded) {
+			stopSelf();
+		}
 	}
 
-	@Override
-	public void onDestroy() {
+	private void clearPref() {
 		try {
 			SharedPreferences p = PreferenceManager
 					.getDefaultSharedPreferences(this);
 			Editor e = p.edit();
-			e.putBoolean(_KEY_PREF_ON_PLAY, false);
-			e.putString(_KEY_PREF_PLAY_URL, "");
-			e.putInt(_KEY_PREF_PLAY_LIST_POS, -1);
+			e.clear();
 			e.commit();
 		} catch (Exception e) {
 		}
-		mMediaPlayer.reset();
-		mMediaPlayer.release();
+	}
+
+	@Override
+	public void onDestroy() {
+		clearPref();
+		if (mMediaPlayer != null) {
+			try {
+				mMediaPlayer.reset();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			mMediaPlayer.release();
+		}
 		if (ss != null)
 			ss.shutdown();
 		super.onDestroy();

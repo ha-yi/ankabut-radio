@@ -2,6 +2,7 @@ package com.teloquitous.lab.ankabut.fragment;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
@@ -18,6 +19,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -30,17 +33,16 @@ import com.teloquitous.lab.ankabut.artikel.FeedItem;
 import com.teloquitous.lab.ankabut.artikel.FeedListAdapter;
 
 public class ArtikelRssFragment extends Fragment implements AnkabutKeyStrings {
-//	private static Context _c;
 	private ViewGroup root;
 	private ListView listView;
 	private TextView tvError;
 	private boolean dataInitiated = false;
 	private ArrayList<FeedItem> data = new ArrayList<FeedItem>();
 	private FeedListAdapter adap;
+	private Animation anim;
 
 	public static Fragment newInstance(Context context) {
 		ArtikelRssFragment f = new ArtikelRssFragment();
-//		_c = context;
 		return f;
 	}
 
@@ -57,6 +59,15 @@ public class ArtikelRssFragment extends Fragment implements AnkabutKeyStrings {
 		root = (ViewGroup) inflater.inflate(R.layout.feed_list, null);
 		listView = (ListView) root.findViewById(R.id.listViewFeed);
 		tvError = (TextView) root.findViewById(R.id.tvErr);
+		tvError.setText("Loading...");
+		tvError.setTextColor(Color.BLUE);
+		anim = new AlphaAnimation(0.0f, 1.0f);
+		anim.setDuration(300);
+		anim.setStartOffset(200);
+		anim.setRepeatMode(Animation.REVERSE);
+		anim.setRepeatCount(Animation.INFINITE);
+		tvError.startAnimation(anim);
+		
 
 		if (!dataInitiated) {
 			new MyTask().execute();
@@ -91,6 +102,7 @@ public class ArtikelRssFragment extends Fragment implements AnkabutKeyStrings {
 	}
 
 	private void fillListView() {
+		tvError.clearAnimation();
 		if (data != null && data.size() > 0) {
 			try {
 				adap = new FeedListAdapter(getActivity(), data);
@@ -99,6 +111,8 @@ public class ArtikelRssFragment extends Fragment implements AnkabutKeyStrings {
 			} catch (Exception e) {
 				terjadiKesalahanFatal();
 			}
+		} else {
+			terjadiKesalahanFatal();
 		}
 
 	}
@@ -107,9 +121,10 @@ public class ArtikelRssFragment extends Fragment implements AnkabutKeyStrings {
 
 		@Override
 		protected Void doInBackground(Void... arg0) {
+			InputStream stream = null;
 			try {
-				BufferedReader r = new BufferedReader(new InputStreamReader(
-						getActivity().getAssets().open("feed.json")));
+				stream = getActivity().getAssets().open("feed.json");
+				BufferedReader r = new BufferedReader(new InputStreamReader(stream));
 				StringBuilder sb = new StringBuilder();
 				String line = null;
 				while ((line = r.readLine()) != null) {
@@ -132,13 +147,18 @@ public class ArtikelRssFragment extends Fragment implements AnkabutKeyStrings {
 				data = fi;
 
 			} catch (IOException e) {
-				// e.printStackTrace();
-				// Log.e(_c.getApplicationInfo().className, "IOException");
 				terjadiKesalahanFatal();
 			} catch (JSONException e) {
 				e.printStackTrace();
-				// Log.e(_c.getApplicationInfo().className, "JSONException");
 				terjadiKesalahanFatal();
+			} finally {
+				if(stream != null) {
+					try {
+						stream.close();
+					} catch (Exception e2) {
+						
+					}
+				}
 			}
 			return null;
 		}
@@ -157,12 +177,11 @@ public class ArtikelRssFragment extends Fragment implements AnkabutKeyStrings {
 	 */
 	@Override
 	public void onDestroy() {
-		// TODO Auto-generated method stub
 		super.onDestroy();
 	}
 
 	public void terjadiKesalahanFatal() {
-		tvError.setText("Afwan, gagal mengolah data.\nSilahkan restart ulang aplikasi.");
+		tvError.setText("Terjadi kesalahan... silahkan muat ulang aplikasi.");
 		tvError.setTextColor(Color.RED);
 	}
 }
