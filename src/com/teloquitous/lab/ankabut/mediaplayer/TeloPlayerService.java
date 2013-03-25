@@ -8,9 +8,11 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -272,7 +274,9 @@ public class TeloPlayerService extends Service implements
 
 	@Override
 	public void onDestroy() {
-		clearPref();
+		if(!teloRadioRunning())
+			clearPref();
+		
 		if (mMediaPlayer != null) {
 			try {
 				mMediaPlayer.reset();
@@ -284,5 +288,17 @@ public class TeloPlayerService extends Service implements
 		if (ss != null)
 			ss.shutdown();
 		super.onDestroy();
+	}
+	
+	public boolean teloRadioRunning() {
+		ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+		for (RunningServiceInfo service : manager
+				.getRunningServices(Integer.MAX_VALUE)) {
+			if (TeloRadioService.class.getName().equals(
+					service.service.getClassName())) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
