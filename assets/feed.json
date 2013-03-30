@@ -35,6 +35,13 @@
         "type": "artikel"
     },
     {
+        "nama": "Konsultasi: Firanda.com",
+        "pengelola": "Ustadz Firanda Andirja Abidin",
+        "url": "http://firanda.com/index.php/konsultasi",
+        "feed": "http://firanda.com/index.php/konsultasi?format=feed&type=rss",
+        "type": "artikel"
+    },
+    {
         "nama": "Remaja Islam",
         "pengelola": "",
         "url": "http://remajaislam.com",
@@ -56,21 +63,6 @@
         "type": "artikel"
     },
     {
-        "nama": "Muslimah.or.id",
-        "pengelola": "",
-        "url": "http://muslimah.or.id",
-        "feed": "http://feeds.feedburner.com/muslimah-or-id?format=xml",
-        "type": "artikel-a"
-    },
-
-    {
-        "nama": "UmmiUmmi.com",
-        "pengelola": "",
-        "url": "http://ummiummi.com",
-        "feed": "http://ummiummi.com/feed",
-        "type": "artikel-a"
-    },
-    {
         "nama": "Radio Rodja",
         "pengelola": "",
         "url": "http://radiorodja.com",
@@ -78,10 +70,18 @@
         "type": "artikel-r"
     },
     {
-        "nama": "Yufid.org",
+        "nama": "Muslimah.or.id",
         "pengelola": "",
-        "url": "http://yufid.org",
-        "feed": "http://yufid.org/feed/",
-        "type": "artikel-s"
+        "url": "http://muslimah.or.id",
+        "feed": "http://feeds.feedburner.com/muslimah-or-id?format=xml",
+        "type": "artikel-a"
+    },
+    {
+        "nama": "UmmiUmmi.com",
+        "pengelola": "",
+        "url": "http://ummiummi.com",
+        "feed": "http://ummiummi.com/feed",
+        "type": "artikel-a"
     }
+
 ]

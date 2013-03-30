@@ -33,6 +33,8 @@ public class MainTabActivity extends FragmentActivity implements AnkabutKeyStrin
 			tab = 0;
 		}
 		
+//		SharedPreferences s = getSharedPreferences("com.teloquitous.lab.ankabut.PLAYER_R",Context.MODE_PRIVATE);
+//		s.edit().putInt("retry", 25).commit();
 		
 		FragmentPagerAdapter adapter = new MyTabFragmentAdapter(getApplicationContext(), getSupportFragmentManager());
 		ViewPager pager = (ViewPager)findViewById(R.id.pager);

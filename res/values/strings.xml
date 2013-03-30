@@ -33,5 +33,10 @@
     <string name="ctx_menu_share">Share</string>
     <string name="title_activity_main_tab">Ankabut - Online Radio Tuner</string>
     <string name="title_activity_rssfeed">Waiting</string>
+    <string name="crash_dialog_title">Ankabut Radio</string>
+    <string name="crash_dialog_text">Applikasi gagal dijalankan karena bug. 
+        Bantu kami untuk memperbaiki kesalahan ini dengan mengirimkan informasi error dalam aplikasi ini.\nBaarokallahu fiikum.</string>
+    <string name="crash_dialog_comment_prompt">Pesan atau komentar yang ingin ditambahkan:</string>
+    <string name="crash_dialog_ok_toast">Syukron!</string>
 
 </resources>

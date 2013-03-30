@@ -7,7 +7,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -67,7 +66,6 @@ public class ArtikelRssFragment extends Fragment implements AnkabutKeyStrings {
 		anim.setRepeatMode(Animation.REVERSE);
 		anim.setRepeatCount(Animation.INFINITE);
 		tvError.startAnimation(anim);
-		
 
 		if (!dataInitiated) {
 			new MyTask().execute();
@@ -123,8 +121,11 @@ public class ArtikelRssFragment extends Fragment implements AnkabutKeyStrings {
 		protected Void doInBackground(Void... arg0) {
 			InputStream stream = null;
 			try {
+				
 				stream = getActivity().getAssets().open("feed.json");
-				BufferedReader r = new BufferedReader(new InputStreamReader(stream));
+
+				BufferedReader r = new BufferedReader(new InputStreamReader(
+						stream));
 				StringBuilder sb = new StringBuilder();
 				String line = null;
 				while ((line = r.readLine()) != null) {
@@ -148,15 +149,15 @@ public class ArtikelRssFragment extends Fragment implements AnkabutKeyStrings {
 
 			} catch (IOException e) {
 				terjadiKesalahanFatal();
-			} catch (JSONException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 				terjadiKesalahanFatal();
 			} finally {
-				if(stream != null) {
+				if (stream != null) {
 					try {
 						stream.close();
 					} catch (Exception e2) {
-						
+
 					}
 				}
 			}

@@ -53,7 +53,7 @@
         android:layout_below="@+id/textViewTitle"
         android:text=""
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#880000"
+        android:textColor="#FF5500"
         android:textSize="10sp" />
 
     <ImageButton

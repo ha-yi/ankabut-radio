@@ -1,13 +1,11 @@
 package com.teloquitous.lab.ankabut.fragment;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ActivityManager;
@@ -163,7 +161,6 @@ public class RadioListFragment extends Fragment implements AnkabutKeyStrings,
 			}
 		});
 
-
 		anim = new AlphaAnimation(0.0f, 1.0f);
 		anim.setDuration(300);
 		anim.setStartOffset(100);
@@ -172,7 +169,6 @@ public class RadioListFragment extends Fragment implements AnkabutKeyStrings,
 		textEmpty.startAnimation(anim);
 		textEmpty.setText("Loading...");
 	}
-
 
 	protected void playRadio(int pos) {
 		curRadio = data.get(pos);
@@ -311,7 +307,9 @@ public class RadioListFragment extends Fragment implements AnkabutKeyStrings,
 			InputStream stream = null;
 			try {
 				stream = getActivity().getAssets().open("playlist.json");
-				BufferedReader r = new BufferedReader(new InputStreamReader(stream));
+
+				BufferedReader r = new BufferedReader(new InputStreamReader(
+						stream));
 				StringBuilder sb = new StringBuilder();
 				String line = null;
 				while ((line = r.readLine()) != null) {
@@ -332,13 +330,11 @@ public class RadioListFragment extends Fragment implements AnkabutKeyStrings,
 				}
 				data = ar;
 
-			} catch (IOException e) {
-				terjadiKesalahanFatal();
-			} catch (JSONException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 				terjadiKesalahanFatal();
 			} finally {
-				if(stream != null) {
+				if (stream != null) {
 					try {
 						stream.close();
 					} catch (Exception e2) {
@@ -427,10 +423,11 @@ public class RadioListFragment extends Fragment implements AnkabutKeyStrings,
 
 	@Override
 	public void onDestroy() {
-		
+
 		try {
-			if(!mPlayer.isPlaying()) {
-				getActivity().stopService(new Intent(getActivity(), TeloPlayerService.class));
+			if (!mPlayer.isPlaying()) {
+				getActivity().stopService(
+						new Intent(getActivity(), TeloPlayerService.class));
 			} else {
 				if (mBound)
 					getActivity().unbindService(mConnection);
