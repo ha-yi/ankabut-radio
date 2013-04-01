@@ -1,4 +1,4 @@
-Version: 1.3.30<br>
+<br>
 Copyright: 2013<br>
 <b><a href="http://teloquitous.web.id">teloquitous.web.id</a></b><br>
 Contact: <i>teloquitous@gmail.com</i>

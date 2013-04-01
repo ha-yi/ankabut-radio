@@ -13,6 +13,7 @@
         android:src="@drawable/ic_feed_artikel" />
 
     <LinearLayout
+        android:layout_marginLeft="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
@@ -21,6 +22,10 @@
             android:id="@+id/tvNamaFeed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:scrollHorizontally="true"
+            android:marqueeRepeatLimit="marquee_forever"
             android:text=""
             android:textAppearance="?android:attr/textAppearanceLarge" />
 

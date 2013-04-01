@@ -1,19 +1,5 @@
 [
     {
-        "nama": "PemudaMuslim.com",
-        "pengelola": "",
-        "url": "http://pemudamuslim.com",
-        "feed": "http://pemudamuslim.com/feed/",
-        "type": "artikel"
-    },
-    {
-        "nama": "Info Kajian PemudaMuslim.com",
-        "pengelola": "PemudaMuslim.com",
-        "url": "http://pemudamuslim.com/info-kajian/",
-        "feed": "http://pemudamuslim.com/feed/?post_type=wpnuke_kajian",
-        "type": "artikel"
-    },
-    {
         "nama": "Manisnyaiman.com",
         "pengelola": "Ustadz Abdullah Taslim, M.A.",
         "url": "http://manisnyaiman.com",
@@ -27,6 +13,7 @@
         "feed": "http://tunasilmu.com/feed/",
         "type": "artikel"
     },
+    
     {
         "nama": "Firanda.com",
         "pengelola": "Ustadz Firanda Andirja Abidin",
@@ -42,10 +29,115 @@
         "type": "artikel"
     },
     {
+        "nama": "CintaSunnah.com",
+        "pengelola": "Ustadz Abu Yahya Badrussalam, Lc.",
+        "url": "http://cintasunnah.com/",
+        "feed": "http://cintasunnah.com/feed/",
+        "type": "artikel"
+    },
+    {
+        "nama": "Ustadz Aris",
+        "pengelola": "Ustadz Aris Munandar, MA.",
+        "url": "http://ustadzaris.com/",
+        "feed": "http://ustadzaris.com/feed",
+        "type": "artikel"
+    },
+    {
+        "nama": "ABU FAWAZ ASY-SYIRBOONY",
+        "pengelola": "Ustadz Muhammad Wasitho, MA",
+        "url": "http://abufawaz.wordpress.com/",
+        "feed": "http://abufawaz.wordpress.com/feed/",
+        "type": "artikel"
+    },
+    {
+        "nama": "UstadzKholid.com",
+        "pengelola": "Ustadz Kholid Syamhudi, Lc.",
+        "url": "http://ustadzkholid.com/",
+        "feed": "http://ustadzkholid.com/feed/",
+        "type": "artikel"
+    },
+    {
+        "nama": "Kajian Sa'id",
+        "pengelola": "Ustadz Sa’id Yai Ardiyansyah, Lc.",
+        "url": "http://kajiansaid.wordpress.com/",
+        "feed": "http://kajiansaid.wordpress.com/feed/",
+        "type": "artikel"
+    },
+    {
+        "nama": "Rumaysho.com",
+        "pengelola": "Ustadz Muhammad Abduh Tuasikal, ST.",
+        "url": "http://rumaysho.com/",
+        "feed": "http://feeds.feedburner.com/rumaysho",
+        "type": "artikel"
+    },
+    {
+        "nama": "Dzikra.com",
+        "pengelola": "Ustadz Dr. Ali Musri Semjan Putra, MA",
+        "url": "http://dzikra.com",
+        "feed": "http://dzikra.com/feed/",
+        "type": "artikel"
+    },
+    {
+        "nama": "abumushlih.com ",
+        "pengelola": "Ustadz Abu Mushlih Ari Wahyudi, Ssi.",
+        "url": "http://abumushlih.com/",
+        "feed": "http://abumushlih.com/feed/",
+        "type": "artikel"
+    },
+    {
+        "nama": "Abul-Jauzaa Blog - !! كن سلفياً على الجادة",
+        "pengelola": "Ustadz Abul Jauzaa",
+        "url": "http://abul-jauzaa.blogspot.com/",
+        "feed": "http://abul-jauzaa.blogspot.com/feeds/posts/default?alt=rss",
+        "type": "artikel"
+    },
+    {
+        "nama": "abusalma.wordpress.com ",
+        "pengelola": "Ustadz Abu Salma",
+        "url": "http://abusalma.wordpress.com/",
+        "feed": "http://abusalma.wordpress.com/feed/",
+        "type": "artikel"
+    },
+    {
+        "nama": "MuslimAfiyah",
+        "pengelola": "Akh dr.Raehanul Bahraen ",
+        "url": "http://muslimafiyah.com/",
+        "feed": "http://muslimafiyah.com/feed",
+        "type": "artikel"
+    },
+    {
+        "nama": "Muslim.Or.Id",
+        "pengelola": "",
+        "url": "http://muslim.or.id",
+        "feed": "http://muslim.or.id/feed/rss",
+        "type": "artikel"
+    },
+    {
+        "nama": "KonsultasiSyariah.com",
+        "pengelola": "",
+        "url": "http://www.konsultasisyariah.com",
+        "feed": "http://feeds.feedburner.com/KonsultasiSyariah?format=xml",
+        "type": "artikel"
+    },
+    {
         "nama": "Remaja Islam",
         "pengelola": "",
         "url": "http://remajaislam.com",
         "feed": "http://remajaislam.com/index.php?format=feed&type=rss",
+        "type": "artikel"
+    },
+    {
+        "nama": "PemudaMuslim.com",
+        "pengelola": "",
+        "url": "http://pemudamuslim.com",
+        "feed": "http://pemudamuslim.com/feed/",
+        "type": "artikel"
+    },
+    {
+        "nama": "Info Kajian PemudaMuslim.com",
+        "pengelola": "PemudaMuslim.com",
+        "url": "http://pemudamuslim.com/info-kajian/",
+        "feed": "http://pemudamuslim.com/feed/?post_type=wpnuke_kajian",
         "type": "artikel"
     },
     {
@@ -62,6 +154,14 @@
         "feed": "http://job.pengusahamuslim.com/feed",
         "type": "artikel"
     },
+    {
+        "nama": "Ekonomi Syariat",
+        "pengelola": "",
+        "url": "http://ekonomisyariat.com/",
+        "feed": "http://ekonomisyariat.com/feed",
+        "type": "artikel"
+    },
+    
     {
         "nama": "Radio Rodja",
         "pengelola": "",
@@ -82,6 +182,19 @@
         "url": "http://ummiummi.com",
         "feed": "http://ummiummi.com/feed",
         "type": "artikel-a"
+    },
+    {
+        "nama": "Mutiara Hikmah",
+        "pengelola": "Al-Ustadz Yasir AbuYasir, M ",
+        "url": "http://mutiarahikmah.com/",
+        "feed": "http://mutiarahikmah.com/feed/",
+        "type": "artikel-a"
+    },
+    {
+        "nama": "KonsultasiSyariah.com >> Wanita",
+        "pengelola": "KonsultasiSyariah",
+        "url": "http://www.konsultasisyariah.com/category/wanita",
+        "feed": "http://www.konsultasisyariah.com/category/wanita/feed/",
+        "type": "artikel-a"
     }
-
 ]

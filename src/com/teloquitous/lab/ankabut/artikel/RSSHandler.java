@@ -44,9 +44,13 @@ public class RSSHandler extends DefaultHandler {
 			item = new RSSItem();
 			currentState = state_unknown;
 		}
-		else if (localName.equalsIgnoreCase("title")){
-			currentState = state_title;
+		/*
+		 * when using localName i have encountered problem when in the RSS include:
+		 * <title> and <media:title>
+		 */
+		else if (qName.equalsIgnoreCase("title")){
 			
+			currentState = state_title;
 		}
 //		else if (localName.equalsIgnoreCase("description")){
 //			currentState = state_description;
@@ -76,6 +80,7 @@ public class RSSHandler extends DefaultHandler {
 			throws SAXException {
 		
 		String strCharacters = new String(ch,start,length);
+//		Log.d("CUR STT", strCharacters);
 		
 		if (itemFound==true){
 		// "item" tag found, it's item's parameter

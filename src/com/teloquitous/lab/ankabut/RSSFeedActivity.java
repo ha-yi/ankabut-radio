@@ -26,6 +26,7 @@ import android.graphics.drawable.shapes.RectShape;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,7 @@ public class RSSFeedActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_rssfeed);
 		RSSUrl = getIntent().getStringExtra("url");
+		Log.d("URL", RSSUrl);
 
 		listView = (ListView) findViewById(R.id.listitem);
 		tvEmpty = (TextView) findViewById(R.id.empty);

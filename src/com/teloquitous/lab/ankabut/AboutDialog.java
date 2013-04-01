@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.text.Html;
 import android.widget.TextView;
@@ -27,20 +28,21 @@ public class AboutDialog extends Dialog {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.about);
-//		TextView tvTitle = (TextView) findViewById(R.id.textAboutTitle);
-//		int color[] = { Color.parseColor("#55FF55"),
-//				Color.parseColor("#55FF55"), Color.parseColor("#008000"),
-//				Color.parseColor("#008000") };
-//		float position[] = { 0, 0.5f, 0.55f, 1 };
-//		TileMode md = TileMode.REPEAT;
-//		LinearGradient lg = new LinearGradient(0, 0, 0, 45, color, position, md);
-//		Shader grad = lg;
-//		tvTitle.getPaint().setShader(grad);
+		StringBuilder sb = new StringBuilder();
+		String version = null;
+		try {
+			version = _c.getPackageManager().getPackageInfo(
+					_c.getPackageName(), 0).versionName;
+		} catch (NameNotFoundException e) {
+			e.printStackTrace();
+		}
+		sb.append("Version: ");
+		sb.append(version);
+		sb.append(readRawTextFile(R.raw.info));
 
 		TextView tvSub = (TextView) findViewById(R.id.textAboutSubtitle);
 		TextView tvDet = (TextView) findViewById(R.id.textAboutDetail);
-		tvSub.setText(Html.fromHtml(readRawTextFile(R.raw.info)));
-//		tvSub.setMovementMethod(LinkMovementMethod.getInstance()); // enable click on link in TextView
+		tvSub.setText(Html.fromHtml(sb.toString()));
 		tvDet.setText(Html.fromHtml(readRawTextFile(R.raw.detail)));
 	}
 

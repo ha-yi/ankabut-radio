@@ -30,6 +30,12 @@
                 android:text="@string/app_name"
                 android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
+            <TextView
+                android:id="@+id/textAboutSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:linksClickable="true"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
                 android:id="@+id/textAboutSubtitle"
