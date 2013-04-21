@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.analytics.tracking.android.EasyTracker;
 import com.teloquitous.lab.ankabut.fragment.ArtikelRssFragment;
 import com.teloquitous.lab.ankabut.fragment.AudioRssFragment;
 import com.teloquitous.lab.ankabut.fragment.RadioListFragment;
@@ -45,6 +46,8 @@ public class MainTabActivity extends FragmentActivity implements AnkabutKeyStrin
         indicator.setCurrentItem(tab);
         
         setTitle(R.string.title_activity_main_tab);
+        EasyTracker.getInstance().setContext(this);
+
 	}
 
 	
@@ -108,6 +111,18 @@ public class MainTabActivity extends FragmentActivity implements AnkabutKeyStrin
 			break;
 		}
 		return true;
+	}
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		EasyTracker.getInstance().activityStart(this);
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+		EasyTracker.getInstance().activityStop(this);
 	}
 
 }

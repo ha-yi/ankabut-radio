@@ -1,6 +1,5 @@
 package com.teloquitous.lab.ankabut.fragment;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -17,8 +16,6 @@ import org.xml.sax.XMLReader;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
-import android.app.DownloadManager;
-import android.app.DownloadManager.Request;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -36,31 +33,27 @@ import android.graphics.drawable.shapes.RectShape;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.AdapterView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.analytics.tracking.android.GAServiceManager;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.Tracker;
 import com.teloquitous.lab.ankabut.AnkabutKeyStrings;
 import com.teloquitous.lab.ankabut.R;
 import com.teloquitous.lab.ankabut.mediaplayer.TeloPlayerService;
@@ -90,7 +83,8 @@ public class AudioRssFragment extends Fragment implements
 	private ViewGroup root;
 
 	private SharedPreferences preferenceManager;
-	private DownloadManager downloadManager;
+	private GoogleAnalytics analytics;
+	private Tracker tracker;
 
 	/**
 	 * pakai model last update, jadi data XML yang berisi list kajian, disimpan
@@ -150,8 +144,7 @@ public class AudioRssFragment extends Fragment implements
 						if (selectedPos == pos) {
 							tPlayer.stopMediaPlayer();
 							lastSelectPos = pos;
-						} 
-						else {
+						} else {
 							if (selectedPos == -1)
 								selectedPos = pos; // prevent on rerun error
 													// caused by array index out
@@ -159,6 +152,9 @@ public class AudioRssFragment extends Fragment implements
 							tPlayer.stopMediaPlayer();
 							selectedPos = pos;
 							tPlayer.initMediaPlayer(curKajian);
+							tracker.sendEvent("Pilih Audio", "Play Audio",
+									null, null);
+							GAServiceManager.getInstance().dispatch();
 						}
 					}
 				}
@@ -183,11 +179,11 @@ public class AudioRssFragment extends Fragment implements
 		if (data != null && data.size() > 0) {
 			try {
 				adapter = new KajianRSSListAdapter(AudioRssFragment.this, data,
-						serviceBerjalan);
+						serviceBerjalan, tracker);
 
 				listView.setAdapter(adapter);
 				dataInitiated = true;
-//				registerForContextMenu(listView);
+				// registerForContextMenu(listView);
 				int i = 0;
 				if (playedOnLastRun) {
 					for (Kajian k : data) {
@@ -357,50 +353,6 @@ public class AudioRssFragment extends Fragment implements
 
 	}
 
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v,
-			ContextMenuInfo menuInfo) {
-		switch (v.getId()) {
-		case R.id.list:
-			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
-			selectedPos = info.position;
-			menu.setHeaderTitle(data.get(info.position).getTitle());
-			getActivity().getMenuInflater().inflate(
-					R.menu.contex_menu_audio_rss, menu);
-			Log.d("Context menu", "created");
-			break;
-
-		default:
-			break;
-		}
-	}
-	
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
-				.getMenuInfo();
-		Kajian menuSelectedKajian = data.get((int) info.id);
-		Log.d("Context menu", "Selected");
-
-		switch (item.getItemId()) {
-		case R.id.menu_download:
-			Log.d("Context menu", "Selected");
-			startDownloadManager(menuSelectedKajian);
-			return true;
-		default:
-			break;
-		}
-		return super.onContextItemSelected(item);
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// TODO Auto-generated method stub
-		Log.d("Option menu", "Selected");
-		return super.onOptionsItemSelected(item);
-	}
-
 	public void bindToService() {
 		Intent intent = new Intent(getActivity(), TeloPlayerService.class);
 		serviceBerjalan = teloPlayerRunning();
@@ -504,58 +456,57 @@ public class AudioRssFragment extends Fragment implements
 		}
 	}
 
-	/**
-	 * DownloadManager Controller
-	 * 
-	 * @param menuSelectedKajian
-	 */
-
-	private void startDownloadManager(Kajian menuSelectedKajian) {
-		Log.d("start download", "start download");
-		File f = new File(Environment.getExternalStorageDirectory()
-				+ "/Ankabut");
-		if (!f.exists()) {
-			f.mkdir();
-		}
-		downloadManager = (DownloadManager) getActivity().getSystemService(
-				Context.DOWNLOAD_SERVICE);
-		Request r = new Request(Uri.parse(menuSelectedKajian.getLink()));
-		r.setDestinationInExternalPublicDir("Ankabut",
-				menuSelectedKajian.getTitle() + ".mp3");
-		r.setAllowedNetworkTypes(Request.NETWORK_WIFI | Request.NETWORK_MOBILE)
-				.setTitle("Ankabut")
-				.setDescription(menuSelectedKajian.getTitle());
-		Toast.makeText(getActivity(), "Mendownload: " + menuSelectedKajian.getTitle(), Toast.LENGTH_LONG).show();
-
-		downloadManager.enqueue(r);
-	}
-
 	@Override
 	public void onDestroy() {
 		try {
-			if(!mPlayer.isPlaying()) {
-				getActivity().stopService(new Intent(getActivity(), TeloPlayerService.class));
-			} else {
-				if (mBound)
-					getActivity().unbindService(mConnection);
-			}
+			if (mPlayer != null) {
+				if (!mPlayer.isPlaying()) {
+					getActivity().stopService(
+							new Intent(getActivity(), TeloPlayerService.class));
+				} else {
+					if (mBound)
+						getActivity().unbindService(mConnection);
+				}
+			} 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		super.onDestroy();
 	}
-	
+
 	@Override
 	public void onPause() {
-		if (mBound)
-			getActivity().unbindService(mConnection);
+		try {
+			if (mBound)
+				getActivity().unbindService(mConnection);
+		} catch (Exception e) {
+		}
+		
 		super.onPause();
 	}
-	
-	 @Override
+
+	@Override
 	public void onResume() {
 		super.onResume();
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		analytics = GoogleAnalytics.getInstance(getActivity());
+		tracker = analytics.getDefaultTracker();
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		GAServiceManager.getInstance().dispatch();
 	}
 
 }

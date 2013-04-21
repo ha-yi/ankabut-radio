@@ -303,36 +303,42 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int vpiUnderlinePageIndicatorStyle=0x7f010005;
     }
     public static final class bool {
-        public static final int default_circle_indicator_centered=0x7f0a0000;
-        public static final int default_circle_indicator_snap=0x7f0a0001;
-        public static final int default_line_indicator_centered=0x7f0a0002;
-        public static final int default_title_indicator_selected_bold=0x7f0a0003;
-        public static final int default_underline_indicator_fades=0x7f0a0004;
+        public static final int default_circle_indicator_centered=0x7f070002;
+        public static final int default_circle_indicator_snap=0x7f070003;
+        public static final int default_line_indicator_centered=0x7f070004;
+        public static final int default_title_indicator_selected_bold=0x7f070005;
+        public static final int default_underline_indicator_fades=0x7f070006;
+        /**  Enable automatic activity tracking 
+         */
+        public static final int ga_autoActivityTracking=0x7f070000;
+        /**  Enable automatic exception tracking 
+         */
+        public static final int ga_reportUncaughtExceptions=0x7f070001;
     }
     public static final class color {
-        public static final int dark_red=0x7f070001;
-        public static final int default_circle_indicator_fill_color=0x7f07000c;
-        public static final int default_circle_indicator_page_color=0x7f07000d;
-        public static final int default_circle_indicator_stroke_color=0x7f07000e;
-        public static final int default_line_indicator_selected_color=0x7f07000f;
-        public static final int default_line_indicator_unselected_color=0x7f070010;
-        public static final int default_title_indicator_footer_color=0x7f070011;
-        public static final int default_title_indicator_selected_color=0x7f070012;
-        public static final int default_title_indicator_text_color=0x7f070013;
-        public static final int default_underline_indicator_selected_color=0x7f070014;
-        public static final int hijau_1=0x7f070003;
-        public static final int list_divider=0x7f070002;
-        public static final int vpi__background_holo_dark=0x7f070004;
-        public static final int vpi__background_holo_light=0x7f070005;
-        public static final int vpi__bright_foreground_disabled_holo_dark=0x7f070008;
-        public static final int vpi__bright_foreground_disabled_holo_light=0x7f070009;
-        public static final int vpi__bright_foreground_holo_dark=0x7f070006;
-        public static final int vpi__bright_foreground_holo_light=0x7f070007;
-        public static final int vpi__bright_foreground_inverse_holo_dark=0x7f07000a;
-        public static final int vpi__bright_foreground_inverse_holo_light=0x7f07000b;
-        public static final int vpi__dark_theme=0x7f070015;
-        public static final int vpi__light_theme=0x7f070016;
-        public static final int warna_bg=0x7f070000;
+        public static final int dark_red=0x7f080001;
+        public static final int default_circle_indicator_fill_color=0x7f08000c;
+        public static final int default_circle_indicator_page_color=0x7f08000d;
+        public static final int default_circle_indicator_stroke_color=0x7f08000e;
+        public static final int default_line_indicator_selected_color=0x7f08000f;
+        public static final int default_line_indicator_unselected_color=0x7f080010;
+        public static final int default_title_indicator_footer_color=0x7f080011;
+        public static final int default_title_indicator_selected_color=0x7f080012;
+        public static final int default_title_indicator_text_color=0x7f080013;
+        public static final int default_underline_indicator_selected_color=0x7f080014;
+        public static final int hijau_1=0x7f080003;
+        public static final int list_divider=0x7f080002;
+        public static final int vpi__background_holo_dark=0x7f080004;
+        public static final int vpi__background_holo_light=0x7f080005;
+        public static final int vpi__bright_foreground_disabled_holo_dark=0x7f080008;
+        public static final int vpi__bright_foreground_disabled_holo_light=0x7f080009;
+        public static final int vpi__bright_foreground_holo_dark=0x7f080006;
+        public static final int vpi__bright_foreground_holo_light=0x7f080007;
+        public static final int vpi__bright_foreground_inverse_holo_dark=0x7f08000a;
+        public static final int vpi__bright_foreground_inverse_holo_light=0x7f08000b;
+        public static final int vpi__dark_theme=0x7f080015;
+        public static final int vpi__light_theme=0x7f080016;
+        public static final int warna_bg=0x7f080000;
     }
     public static final class dimen {
         public static final int default_circle_indicator_radius=0x7f0c0000;
@@ -380,55 +386,55 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int vpi__tab_unselected_pressed_holo=0x7f02001b;
     }
     public static final class id {
-        public static final int bottom=0x7f090003;
-        public static final int empty=0x7f090018;
-        public static final int feeddescribtion=0x7f090015;
-        public static final int feedlink=0x7f090016;
-        public static final int feedtitle=0x7f090014;
-        public static final int group_popupmenu=0x7f09002f;
-        public static final int head_layout=0x7f09000a;
-        public static final int imageButton1=0x7f090025;
-        public static final int imageIcon=0x7f090005;
-        public static final int imageView1=0x7f090021;
-        public static final int imageViewRadioBlink=0x7f090027;
-        public static final int imageViewRadioStat=0x7f090028;
-        public static final int imageViewType=0x7f09001b;
-        public static final int indicator=0x7f09000f;
-        public static final int layout1=0x7f090026;
-        public static final int list=0x7f09000d;
-        public static final int listView1=0x7f090009;
-        public static final int listViewFeed=0x7f090019;
-        public static final int listViewRadio=0x7f090013;
-        public static final int listitem=0x7f090017;
-        public static final int menuRecord=0x7f090030;
-        public static final int menu_about=0x7f09002d;
-        public static final int menu_download=0x7f09002e;
-        public static final int menu_settings=0x7f09002c;
-        public static final int none=0x7f090000;
-        public static final int pager=0x7f090010;
-        public static final int textAboutDetail=0x7f090008;
-        public static final int textAboutSubtitle=0x7f090007;
-        public static final int textAboutTitle=0x7f090006;
-        public static final int textVPubdate=0x7f09001f;
-        public static final int textVTitle=0x7f09001e;
-        public static final int textViewAuthor=0x7f090022;
-        public static final int textViewDate=0x7f090024;
-        public static final int textViewDuration=0x7f090020;
-        public static final int textViewEmpty=0x7f09000e;
-        public static final int textViewKajianNet=0x7f09000b;
-        public static final int textViewKajianNetDetail=0x7f09000c;
-        public static final int textViewKota=0x7f09002a;
-        public static final int textViewNamaRadio=0x7f090029;
-        public static final int textViewRadioAnkabut=0x7f090011;
-        public static final int textViewRadioOnline=0x7f090012;
-        public static final int textViewStatus=0x7f09002b;
-        public static final int textViewTitle=0x7f090023;
-        public static final int top=0x7f090004;
-        public static final int triangle=0x7f090001;
-        public static final int tvErr=0x7f09001a;
-        public static final int tvNamaFeed=0x7f09001c;
-        public static final int tvPengelolaFeed=0x7f09001d;
-        public static final int underline=0x7f090002;
+        public static final int bottom=0x7f0a0003;
+        public static final int empty=0x7f0a0018;
+        public static final int feeddescribtion=0x7f0a0015;
+        public static final int feedlink=0x7f0a0016;
+        public static final int feedtitle=0x7f0a0014;
+        public static final int group_popupmenu=0x7f0a002f;
+        public static final int head_layout=0x7f0a000a;
+        public static final int imageButton1=0x7f0a0025;
+        public static final int imageIcon=0x7f0a0005;
+        public static final int imageView1=0x7f0a0021;
+        public static final int imageViewRadioBlink=0x7f0a0027;
+        public static final int imageViewRadioStat=0x7f0a0028;
+        public static final int imageViewType=0x7f0a001b;
+        public static final int indicator=0x7f0a000f;
+        public static final int layout1=0x7f0a0026;
+        public static final int list=0x7f0a000d;
+        public static final int listView1=0x7f0a0009;
+        public static final int listViewFeed=0x7f0a0019;
+        public static final int listViewRadio=0x7f0a0013;
+        public static final int listitem=0x7f0a0017;
+        public static final int menuRecord=0x7f0a0030;
+        public static final int menu_about=0x7f0a002d;
+        public static final int menu_download=0x7f0a002e;
+        public static final int menu_settings=0x7f0a002c;
+        public static final int none=0x7f0a0000;
+        public static final int pager=0x7f0a0010;
+        public static final int textAboutDetail=0x7f0a0008;
+        public static final int textAboutSubtitle=0x7f0a0007;
+        public static final int textAboutTitle=0x7f0a0006;
+        public static final int textVPubdate=0x7f0a001f;
+        public static final int textVTitle=0x7f0a001e;
+        public static final int textViewAuthor=0x7f0a0022;
+        public static final int textViewDate=0x7f0a0024;
+        public static final int textViewDuration=0x7f0a0020;
+        public static final int textViewEmpty=0x7f0a000e;
+        public static final int textViewKajianNet=0x7f0a000b;
+        public static final int textViewKajianNetDetail=0x7f0a000c;
+        public static final int textViewKota=0x7f0a002a;
+        public static final int textViewNamaRadio=0x7f0a0029;
+        public static final int textViewRadioAnkabut=0x7f0a0011;
+        public static final int textViewRadioOnline=0x7f0a0012;
+        public static final int textViewStatus=0x7f0a002b;
+        public static final int textViewTitle=0x7f0a0023;
+        public static final int top=0x7f0a0004;
+        public static final int triangle=0x7f0a0001;
+        public static final int tvErr=0x7f0a001a;
+        public static final int tvNamaFeed=0x7f0a001c;
+        public static final int tvPengelolaFeed=0x7f0a001d;
+        public static final int underline=0x7f0a0002;
     }
     public static final class integer {
         public static final int default_circle_indicator_orientation=0x7f0b0000;
@@ -467,35 +473,38 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int info=0x7f050001;
     }
     public static final class string {
-        public static final int ankabut=0x7f060009;
-        public static final int app_name=0x7f060000;
-        public static final int code_name=0x7f060001;
-        public static final int crash_dialog_comment_prompt=0x7f060018;
-        public static final int crash_dialog_ok_toast=0x7f060019;
-        public static final int crash_dialog_text=0x7f060017;
-        public static final int crash_dialog_title=0x7f060016;
-        public static final int ctx_menu_Stop=0x7f060010;
-        public static final int ctx_menu_detail=0x7f060012;
-        public static final int ctx_menu_download=0x7f060011;
-        public static final int ctx_menu_play=0x7f06000f;
-        public static final int ctx_menu_share=0x7f060013;
-        public static final int deskripsi=0x7f060008;
-        public static final int hello_world=0x7f060002;
-        public static final int menu_about=0x7f060004;
-        public static final int menu_audio=0x7f060007;
-        public static final int menu_news=0x7f060006;
-        public static final int menu_radio=0x7f060005;
-        public static final int menu_settings=0x7f060003;
-        public static final int title_activity_artikel=0x7f06000d;
-        public static final int title_activity_audio_rss=0x7f06000e;
-        public static final int title_activity_main_tab=0x7f060014;
-        public static final int title_activity_radio_list=0x7f06000c;
-        public static final int title_activity_rssfeed=0x7f060015;
-        public static final int title_artikel_detail=0x7f06000a;
-        public static final int title_artikel_list=0x7f06000b;
+        public static final int ankabut=0x7f06000a;
+        public static final int app_name=0x7f060001;
+        public static final int code_name=0x7f060002;
+        public static final int crash_dialog_comment_prompt=0x7f060019;
+        public static final int crash_dialog_ok_toast=0x7f06001a;
+        public static final int crash_dialog_text=0x7f060018;
+        public static final int crash_dialog_title=0x7f060017;
+        public static final int ctx_menu_Stop=0x7f060011;
+        public static final int ctx_menu_detail=0x7f060013;
+        public static final int ctx_menu_download=0x7f060012;
+        public static final int ctx_menu_play=0x7f060010;
+        public static final int ctx_menu_share=0x7f060014;
+        public static final int deskripsi=0x7f060009;
+        /**  Replace placeholder ID with your tracking ID 
+         */
+        public static final int ga_trackingId=0x7f060000;
+        public static final int hello_world=0x7f060003;
+        public static final int menu_about=0x7f060005;
+        public static final int menu_audio=0x7f060008;
+        public static final int menu_news=0x7f060007;
+        public static final int menu_radio=0x7f060006;
+        public static final int menu_settings=0x7f060004;
+        public static final int title_activity_artikel=0x7f06000e;
+        public static final int title_activity_audio_rss=0x7f06000f;
+        public static final int title_activity_main_tab=0x7f060015;
+        public static final int title_activity_radio_list=0x7f06000d;
+        public static final int title_activity_rssfeed=0x7f060016;
+        public static final int title_artikel_detail=0x7f06000b;
+        public static final int title_artikel_list=0x7f06000c;
     }
     public static final class style {
-        public static final int AnkabutText=0x7f080003;
+        public static final int AnkabutText=0x7f090003;
         /** 
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
@@ -521,18 +530,18 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f080000;
+        public static final int AppBaseTheme=0x7f090000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f080001;
-        public static final int TextAppearance_TabPageIndicator=0x7f080008;
-        public static final int Theme_PageIndicatorDefaults=0x7f080005;
-        public static final int Widget=0x7f080006;
-        public static final int Widget_IconPageIndicator=0x7f080009;
-        public static final int Widget_TabPageIndicator=0x7f080007;
-        public static final int h_separator=0x7f080004;
-        public static final int verticalTextStyle=0x7f080002;
+        public static final int AppTheme=0x7f090001;
+        public static final int TextAppearance_TabPageIndicator=0x7f090008;
+        public static final int Theme_PageIndicatorDefaults=0x7f090005;
+        public static final int Widget=0x7f090006;
+        public static final int Widget_IconPageIndicator=0x7f090009;
+        public static final int Widget_TabPageIndicator=0x7f090007;
+        public static final int h_separator=0x7f090004;
+        public static final int verticalTextStyle=0x7f090002;
     }
     public static final class styleable {
         /** Attributes that can be used with a CirclePageIndicator.

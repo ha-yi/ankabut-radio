@@ -23,6 +23,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.analytics.tracking.android.GAServiceManager;
+import com.google.analytics.tracking.android.Tracker;
 import com.teloquitous.lab.ankabut.AnkabutKeyStrings;
 import com.teloquitous.lab.ankabut.R;
 
@@ -37,12 +39,14 @@ public class KajianRSSListAdapter extends BaseAdapter implements
 	private boolean serviceRunning;
 	private boolean onRadio;
 	private String url = "";
+	private Tracker tracker;
 
-	public KajianRSSListAdapter(Activity c, List<Kajian> data) {
+	public KajianRSSListAdapter(Activity c, List<Kajian> data, Tracker t) {
 		super();
 		this.activity = c;
 		// ctx = c;
 		this.data = data;
+		this.tracker = t;
 		inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		getPref();
@@ -59,12 +63,13 @@ public class KajianRSSListAdapter extends BaseAdapter implements
 		}
 	}
 
-	public KajianRSSListAdapter(Fragment f, List<Kajian> data, boolean b) throws Exception {
+	public KajianRSSListAdapter(Fragment f, List<Kajian> data, boolean b, Tracker t) throws Exception {
 		this.data = data;
 		this.activity = f.getActivity();
 		inflater = (LayoutInflater) activity
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		serviceRunning = b;
+		this.tracker = t;
 		getPref();
 	}
 
@@ -145,7 +150,8 @@ public class KajianRSSListAdapter extends BaseAdapter implements
 						.setTitle("Ankabut")
 						.setDescription(judul);
 				Toast.makeText(activity, "Mendownload: " + judul, Toast.LENGTH_LONG).show();
-
+				tracker.sendEvent("Pilih Audio","Download", null,null);
+				GAServiceManager.getInstance().dispatch();
 				downloadManager.enqueue(r);
 				
 			}

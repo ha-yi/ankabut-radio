@@ -42,6 +42,9 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.analytics.tracking.android.GAServiceManager;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.Tracker;
 import com.teloquitous.lab.ankabut.AnkabutKeyStrings;
 import com.teloquitous.lab.ankabut.R;
 import com.teloquitous.lab.ankabut.mediaplayer.TeloPlayerService;
@@ -61,6 +64,8 @@ public class RadioListFragment extends Fragment implements AnkabutKeyStrings,
 	private boolean serviceBerjalan = false;
 	private boolean mBound;
 	private TeloRadioService tPlayer;
+	private GoogleAnalytics analytics;
+	private Tracker tracker;
 
 	private ServiceConnection mConnection = new ServiceConnection() {
 
@@ -198,6 +203,9 @@ public class RadioListFragment extends Fragment implements AnkabutKeyStrings,
 					}
 					selectedPos = pos;
 					tPlayer.initMediaPlayer(curRadio);
+					tracker.sendEvent("Pilih Radio", curRadio.getNamaRadio(),
+							null, null);
+					GAServiceManager.getInstance().dispatch();
 				}
 			}
 		}
@@ -375,7 +383,9 @@ public class RadioListFragment extends Fragment implements AnkabutKeyStrings,
 		data.get(selectedPos).setStatusMessage("Menjalankan");
 		data.get(selectedPos).setPlayedAtm(true);
 		listView.invalidateViews();
-
+		tracker.sendEvent("Radio ON", data.get(selectedPos).getNamaRadio(),
+				null, null);
+		GAServiceManager.getInstance().dispatch();
 	}
 
 	@Override
@@ -425,12 +435,14 @@ public class RadioListFragment extends Fragment implements AnkabutKeyStrings,
 	public void onDestroy() {
 
 		try {
-			if (!mPlayer.isPlaying()) {
-				getActivity().stopService(
-						new Intent(getActivity(), TeloPlayerService.class));
-			} else {
-				if (mBound)
-					getActivity().unbindService(mConnection);
+			if (mPlayer != null) {
+				if (!mPlayer.isPlaying()) {
+					getActivity().stopService(
+							new Intent(getActivity(), TeloPlayerService.class));
+				} else {
+					if (mBound)
+						getActivity().unbindService(mConnection);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -440,8 +452,13 @@ public class RadioListFragment extends Fragment implements AnkabutKeyStrings,
 
 	@Override
 	public void onPause() {
-		if (mBound)
-			getActivity().unbindService(mConnection);
+		try {
+			if (mBound)
+				getActivity().unbindService(mConnection);
+		} catch (Exception e) {
+			
+		}
+		
 		super.onPause();
 	}
 
@@ -451,6 +468,24 @@ public class RadioListFragment extends Fragment implements AnkabutKeyStrings,
 			dataInitialized = true;
 		}
 		super.onResume();
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		analytics = GoogleAnalytics.getInstance(getActivity());
+		tracker = analytics.getDefaultTracker();
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		GAServiceManager.getInstance().dispatch();
 	}
 
 }

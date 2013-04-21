@@ -25,6 +25,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.analytics.tracking.android.GAServiceManager;
+import com.google.analytics.tracking.android.GoogleAnalytics;
+import com.google.analytics.tracking.android.Tracker;
 import com.teloquitous.lab.ankabut.AnkabutKeyStrings;
 import com.teloquitous.lab.ankabut.R;
 import com.teloquitous.lab.ankabut.RSSFeedActivity;
@@ -39,6 +42,8 @@ public class ArtikelRssFragment extends Fragment implements AnkabutKeyStrings {
 	private ArrayList<FeedItem> data = new ArrayList<FeedItem>();
 	private FeedListAdapter adap;
 	private Animation anim;
+	private GoogleAnalytics analytics;
+	private Tracker tracker;
 
 	public static Fragment newInstance(Context context) {
 		ArtikelRssFragment f = new ArtikelRssFragment();
@@ -90,9 +95,12 @@ public class ArtikelRssFragment extends Fragment implements AnkabutKeyStrings {
 		try {
 			FeedItem i = data.get(pos);
 			if (i != null) {
+				tracker.sendEvent("Pilih Feed",i.getNama() ,null , null);
+				GAServiceManager.getInstance().dispatch();
 				Intent it = new Intent(getActivity(), RSSFeedActivity.class);
 				it.putExtra("url", i.getFeed());
 				startActivity(it);
+				
 			}
 		} catch (Exception e) {
 		}
@@ -184,5 +192,23 @@ public class ArtikelRssFragment extends Fragment implements AnkabutKeyStrings {
 	public void terjadiKesalahanFatal() {
 		tvError.setText("Terjadi kesalahan... silahkan muat ulang aplikasi.");
 		tvError.setTextColor(Color.RED);
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		analytics = GoogleAnalytics.getInstance(getActivity());
+		tracker = analytics.getDefaultTracker();
+	}
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+	}
+	
+	@Override
+	public void onStop() {
+		super.onStop();
+		GAServiceManager.getInstance().dispatch();
 	}
 }

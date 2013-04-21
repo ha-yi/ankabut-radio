@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.teloquitous.lab.ankabut"
     android:installLocation="auto"
-    android:versionCode="10"
-    android:versionName="1.4.1 (Zaitun)" >
+    android:versionCode="14"
+    android:versionName="1.4.3 (Zaitun)" >
 
     <uses-sdk
         android:minSdkVersion="10"
@@ -14,7 +14,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="MyApplication"
         android:allowBackup="true"
         android:debuggable="false"
         android:icon="@drawable/ic_launcher"
